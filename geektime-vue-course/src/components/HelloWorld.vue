@@ -5,6 +5,7 @@
     <h1 @click="add">累加器(点击):{{count}}</h1>
     <button @click="loading">更换网站图标</button>
     <button @click="reset">重置网站图标</button>
+    <h1 @click="toggle">切换全屏</h1>
   </div>
 </template>
 
@@ -29,6 +30,9 @@ let { favicon,reset } = useFavicon()
 function loading(){
   favicon.value = '/src/assets/fruits.png'
 }
+
+import { useFullscreen } from '@vueuse/core'
+const { isFullscreen, enter, exit, toggle } = useFullscreen()
 </script>
 
 <style scoped>
