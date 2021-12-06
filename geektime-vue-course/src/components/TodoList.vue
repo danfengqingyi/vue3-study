@@ -26,12 +26,14 @@
 
 <script setup>
 import { ref,computed } from "vue";
+import { useStorage } from "../utils/storage";
 
 let { title, todos, addTodo, clear, active, all, allDone } = useTodos();
 
 function useTodos() {
   let title = ref("");
-  let todos = ref([]);
+  let todos = useStorage('todos','[]');
+  
   function addTodo() {
     todos.value.push({
       title: title.value,
