@@ -1,6 +1,7 @@
 
 <template>
   <div :style="fontstyle">
+    <slot></slot>
     <div class='rate'
          @mouseout="mouseOut">
       <span @mouseover="mouseOver(num)"

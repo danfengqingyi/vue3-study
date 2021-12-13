@@ -7,7 +7,9 @@
     <button @click="reset">重置网站图标</button>
     <h1 @click="toggle">切换全屏</h1>
 
-    <Rate :value="score" @update-rate="update"></Rate>
+    <Rate :value="score" @update-rate="update">
+      <img width="14" src="/favicon.ico">
+    </Rate>
     <Rate :value="4"
           theme="red"></Rate>
     <Rate :value="1"
