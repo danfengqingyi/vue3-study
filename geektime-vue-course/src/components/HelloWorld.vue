@@ -14,6 +14,11 @@
           theme="red"></Rate>
     <Rate :value="1"
           theme="green"></Rate>
+    <button @click="toggleD">点击后动画展示</button>
+    <transition name="fade">
+      <h1 v-if="showTitle">你好 Vue 3</h1>
+    </transition>
+    
   </div>
 </template>
 
@@ -46,11 +51,17 @@ const { isFullscreen, enter, exit, toggle } = useFullscreen();
 let score = ref(3.5)
 function update(num){   
    score.value = num
-   }
+}
+let showTitle = ref(true)
+function toggleD(){  
+  showTitle.value = !showTitle.value
+}
 </script>
 
 <style scoped>
 h1 {
   color: v-bind(color);
 }
+.fade-enter-active,.fade-leave-active {  transition: opacity 0.5s linear;}
+.fade-enter-from,.fade-leave-to {  opacity: 0;}
 </style>
