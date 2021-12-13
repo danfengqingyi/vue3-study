@@ -1,6 +1,8 @@
 
 <template>
   <div>
+    <span class="dustbin"> 🗑 </span>
+
     <input type="text"
            v-model="title"
            @keydown.enter="addTodo" />
@@ -9,7 +11,8 @@
     <ul v-if="todos.length">
       <transition-group name="flip-list"
                         tag="ul">
-        <li v-for="(todo,i) in todos" :key="todo.title">
+        <li v-for="(todo,i) in todos"
+            :key="todo.title">
           <input type="checkbox"
                  v-model="todo.done" />
           <span :class="{ done: todo.done }">{{ todo.title }}</span>
@@ -36,15 +39,43 @@
       </div>
     </div>
   </transition>
+  <div class="animate-wrap">
+    <transition @before-enter="beforeEnter"
+                @enter="enter"
+                @after-enter="afterEnter">
+      <div class="animate"
+           v-show="animate.show"> 📋 </div>
+    </transition>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { useStorage } from "../utils/storage";
 
 let { title, todos, addTodo, clear, active, all, allDone } = useTodos();
 let showModal = ref(false);
+
+let animate = reactive({ show: false, el: null });
+function beforeEnter(el) {
+  let dom = animate.el;
+  let rect = dom.getBoundingClientRect();
+  let x = window.innerWidth - rect.left - 60;
+  let y = rect.top - 10;
+  el.style.transform = `translate(-${x}px, ${y}px)`;
+}
+function enter(el, done) {
+  document.body.offsetHeight;
+  el.style.transform = `translate(0,0)`;
+  el.addEventListener("transitionend", done);
+}
+function afterEnter(el) {
+  animate.show = false;
+  el.style.display = "none";
+}
 function removeTodo(e, i) {
+  animate.el = e.target;
+  animate.show = true;
   todos.value.splice(i, 1);
 }
 function useTodos() {
@@ -123,6 +154,19 @@ function useTodos() {
 .flip-list-leave-to {
   opacity: 0;
   transform: translateX(30px);
+}
+.dustbin {
+  font-size: 20px;
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}
+.animate-wrap .animate {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 100;
+  transition: all 0.5s linear;
 }
 </style>
 
