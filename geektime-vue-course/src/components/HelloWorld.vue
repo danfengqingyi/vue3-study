@@ -6,11 +6,18 @@
     <button @click="loading">更换网站图标</button>
     <button @click="reset">重置网站图标</button>
     <h1 @click="toggle">切换全屏</h1>
+
+    <Rate :value="score" @update-rate="update"></Rate>
+    <Rate :value="4"
+          theme="red"></Rate>
+    <Rate :value="1"
+          theme="green"></Rate>
   </div>
 </template>
 
 <script setup>
-import {ref} from "vue"
+import Rate from "../components/Rate.vue";
+import { ref } from "vue";
 import { useMouse } from "../utils/mouse";
 let { x, y } = useMouse();
 
@@ -25,14 +32,19 @@ function addCount() {
   return { count, color, add };
 }
 
-import useFavicon from '../utils/favicon' 
-let { favicon,reset } = useFavicon()
-function loading(){
-  favicon.value = '/src/assets/fruits.png'
+import useFavicon from "../utils/favicon";
+let { favicon, reset } = useFavicon();
+function loading() {
+  favicon.value = "/src/assets/fruits.png";
 }
 
-import { useFullscreen } from '@vueuse/core'
-const { isFullscreen, enter, exit, toggle } = useFullscreen()
+import { useFullscreen } from "@vueuse/core";
+const { isFullscreen, enter, exit, toggle } = useFullscreen();
+
+let score = ref(3.5)
+function update(num){   
+   score.value = num
+   }
 </script>
 
 <style scoped>
