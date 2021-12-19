@@ -1,5 +1,6 @@
 
-import { createStore } from 'vuex'
+// import { createStore } from 'vuex'
+import { createStore } from './gvuex'
 export default createStore({
   state() {
     return {
