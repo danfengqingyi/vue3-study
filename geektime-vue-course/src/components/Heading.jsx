@@ -18,6 +18,7 @@ export default defineComponent({
   // }
   // jsx语法版本
   setup(props, { slots }) {
+    console.log(slots.default());
     const tag = 'h'+props.level
     return () => <tag>{slots.default()}</tag>
   }
